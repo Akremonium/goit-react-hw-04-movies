@@ -1,39 +1,58 @@
 import { Switch, Route } from "react-router-dom";
+import { lazy, Suspense } from "react";
 
 //components
 import Container from "./Components/Container";
 import AppBar from "./Components/AppBar";
-import Search from "./Components/Search";
+import Section from "./Components/Section";
+
+import "./styles.scss";
 
 //views
-import HomeView from "./Views/HomeView";
-// import MoviesView from "./Views/MoviesView";
-import MovieDetailsView from "./Views/MovieDetailsView";
-import ErrorView from "./Views/ErrorView";
+const HomeView = lazy(() =>
+  import("./Views/HomeView" /* webpackChunkName: "home-view" */)
+);
+const MoviesView = lazy(() =>
+  import("./Views/MoviesView" /* webpackChunkName: "movies-view" */)
+);
+const MovieDetailsView = lazy(() =>
+  import(
+    "./Views/MovieDetailsView" /* webpackChunkName: "movie-details-view" */
+  )
+);
+const ErrorView = lazy(() =>
+  import("./Views/ErrorView" /* webpackChunkName: "error-view" */)
+);
 
 const App = () => (
   <Container>
     <AppBar />
 
-    <hr />
+    <Suspense fallback={<h1>LOADING</h1>}>
+      <Switch>
+        <Route exact path="/">
+          <Section>
+            <HomeView />
+          </Section>
+        </Route>
 
-    <Switch>
-      <Route exact path="/">
-        <HomeView />
-      </Route>
+        <Route exact path="/movies">
+          <Section>
+            <MoviesView />
+          </Section>
+        </Route>
 
-      <Route exact path="/movies">
-        <Search />
-      </Route>
+        <Route path="/movies/:movieId">
+          <Section>
+            <MovieDetailsView />
+          </Section>
+        </Route>
 
-      <Route path="/movies/:movieId">
-        <MovieDetailsView />
-      </Route>
-
-      <Route>
-        <ErrorView />
-      </Route>
-    </Switch>
+        <Route>
+          <ErrorView />
+        </Route>
+      </Switch>
+    </Suspense>
   </Container>
 );
 

@@ -1,0 +1,25 @@
+.link {
+  text-decoration: none;
+}
+
+.active {
+  color: teal;
+}
+
+.button {
+  text-decoration: none;
+  font-size: 26px;
+  font-weight: 500;
+  display: block;
+  padding: 5px 10px;
+  border-radius: 15px;
+  color: purple;
+
+  & + .button {
+    margin-left: 20px;
+  }
+}
+
+.nav {
+  display: flex;
+}

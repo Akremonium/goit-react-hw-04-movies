@@ -8,7 +8,7 @@ export const getTrendingMovies = () => {
     .get(`${BASE_URL}/3/trending/movie/day?api_key=${KEY}`)
     .then(({ data }) => data.results)
     .catch((error) => {
-      console.log(error);
+      console.error(error);
     });
 };
 
@@ -17,7 +17,7 @@ export const getMovieDetails = (movieId) => {
     .get(`${BASE_URL}/3/movie/${movieId}?api_key=${KEY}`)
     .then(({ data }) => data)
     .catch((error) => {
-      console.log(error);
+      console.error(error);
     });
 };
 
@@ -26,7 +26,7 @@ export const getCast = (movieId) => {
     .get(`${BASE_URL}/3/movie/${movieId}/credits?api_key=${KEY}`)
     .then(({ data }) => data.cast)
     .catch((error) => {
-      console.log(error);
+      console.error(error);
     });
 };
 
@@ -35,12 +35,24 @@ export const getReviews = (movieId) => {
     .get(`${BASE_URL}/3/movie/${movieId}/reviews?api_key=${KEY}`)
     .then(({ data }) => data.results)
     .catch((error) => {
-      console.log(error);
+      console.error(error);
     });
 };
 
-export const getMovieBySearch = () => {
-  return axios.get(`${BASE_URL}/search/movie?api_key=${KEY}`);
+export const getMovieBySearch = (query) => {
+  return axios
+    .get(`${BASE_URL}/3/search/movie?query=${query}&page=1&api_key=${KEY}`)
+    .then(({ data }) => data.results)
+    .then((data) => {
+      if (data.length > 0) {
+        return data;
+      }
+
+      return null;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
 // export function fetchMovieDetails() {

@@ -1,0 +1,25 @@
+.cardList {
+  display: flex;
+  flex-wrap: wrap;
+  //   justify-content: space-between;
+  padding: 10px;
+}
+
+.card {
+  width: 200px;
+  margin: 9px;
+  overflow: hidden;
+}
+
+.cardTitle {
+  height: 45px;
+  text-align: center;
+  padding: 5px;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: gray;
+  color: black;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  word-wrap: break-word;
+}

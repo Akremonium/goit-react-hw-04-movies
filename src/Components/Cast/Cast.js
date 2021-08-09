@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 
 import * as movieGalleryAPI from "../../Services/movie-gallery-api";
 
+import styles from "./Cast.module.scss";
+
 const Cast = () => {
   const [cast, setCast] = useState(null);
   const { movieId } = useParams();
@@ -15,17 +17,14 @@ const Cast = () => {
     <div>
       <h3>Cast</h3>
 
-      <ul>
+      <ul className={styles.castList}>
         {cast &&
           cast.map((actor) => (
-            <li key={actor.name}>
+            <li key={actor.name} className={styles.actorCard}>
               {actor.profile_path ? (
                 <img
                   width="100"
-                  src={
-                    actor.profile_path &&
-                    `https://image.tmdb.org/t/p/w500/${actor.profile_path}`
-                  }
+                  src={`https://image.tmdb.org/t/p/w500/${actor.profile_path}`}
                   alt={actor.name}
                 />
               ) : (

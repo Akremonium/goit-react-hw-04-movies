@@ -1,0 +1,9 @@
+.castList {
+  display: flex;
+  flex-wrap: wrap;
+  //   justify-content: space-between;
+}
+
+.actorCard {
+  width: calc(100% / 8);
+}
