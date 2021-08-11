@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useHistory, useLocation, Link } from "react-router-dom";
 
-import * as movieGalleryAPI from "../Services/movie-gallery-api";
-import Search from "../Components/Search";
+import * as movieGalleryAPI from "../../Services/movie-gallery-api";
+import Search from "../../Components/Search";
 
-import styles from "./HomeView.module.scss";
+import styles from "../HomeView/HomeView.module.scss";
 
 const MoviesView = () => {
   const [query, setQuery] = useState("");
@@ -50,7 +50,12 @@ const MoviesView = () => {
         {movies &&
           movies.map((movie) => (
             <li className={styles.card} key={movie.id}>
-              <Link to={`/movies/${movie.id}}`}>
+              <Link
+                to={{
+                  pathname: `/movies/${movie.id}`,
+                  state: { from: location },
+                }}
+              >
                 <img
                   src={`https://image.tmdb.org/t/p/w200/${movie.poster_path}`}
                   alt={movie.title}

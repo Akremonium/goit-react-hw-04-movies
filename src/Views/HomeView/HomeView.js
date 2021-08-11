@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import styles from "./HomeView.module.scss";
 
-import * as movieGalleryAPI from "../Services/movie-gallery-api";
+import * as movieGalleryAPI from "../../Services/movie-gallery-api";
 
 const HomeView = () => {
   const [movies, setMovies] = useState(null);
+  const location = useLocation();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -22,7 +23,12 @@ const HomeView = () => {
         {movies &&
           movies.map((movie) => (
             <li key={movie.id} className={styles.card}>
-              <Link to={`/movies/${movie.id}}`}>
+              <Link
+                to={{
+                  pathname: `/movies/${movie.id}}`,
+                  state: { from: location },
+                }}
+              >
                 <img
                   src={`https://image.tmdb.org/t/p/w200/${movie.poster_path}`}
                   alt={movie.title}

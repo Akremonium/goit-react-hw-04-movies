@@ -5,20 +5,22 @@ import {
   useRouteMatch,
   Route,
   useHistory,
+  useLocation,
 } from "react-router-dom";
 
 import styles from "./MovieDetails.module.scss";
 
-import Cast from "../Components/Cast";
-import Reviews from "../Components/Reviews";
+import Cast from "../../Components/Cast";
+import Reviews from "../../Components/Reviews";
 
-import * as movieGalleryAPI from "../Services/movie-gallery-api";
+import * as movieGalleryAPI from "../../Services/movie-gallery-api";
 
 const MovieDetails = () => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
   const { url, path } = useRouteMatch();
   const history = useHistory();
+  const location = useLocation();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -28,9 +30,13 @@ const MovieDetails = () => {
     movieGalleryAPI.getMovieDetails(movieId).then(setMovie);
   }, [movieId]);
 
+  const goBack = () => {
+    history.push(location?.state?.from ?? "/");
+  };
+
   return (
     <div className={styles.wrapper}>
-      <button onClick={history.goBack} className={styles.backButton}>
+      <button onClick={goBack} className={styles.backButton}>
         BACK
       </button>
 
@@ -70,10 +76,22 @@ const MovieDetails = () => {
                 </li>
 
                 <li className={styles.infoDetail}>
-                  <NavLink className={styles.subLink} to={`${url}/cast`}>
+                  <NavLink
+                    className={styles.subLink}
+                    to={{
+                      pathname: `${url}/cast`,
+                      state: { from: location?.state?.from ?? "/" },
+                    }}
+                  >
                     Actors
                   </NavLink>
-                  <NavLink className={styles.subLink} to={`${url}/reviews`}>
+                  <NavLink
+                    className={styles.subLink}
+                    to={{
+                      pathname: `${url}/reviews`,
+                      state: { from: location?.state?.from ?? "/" },
+                    }}
+                  >
                     Reviews
                   </NavLink>
                 </li>

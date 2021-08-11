@@ -1,4 +1,4 @@
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import { lazy, Suspense } from "react";
 
 //components
@@ -19,9 +19,6 @@ const MovieDetailsView = lazy(() =>
   import(
     "./Views/MovieDetailsView" /* webpackChunkName: "movie-details-view" */
   )
-);
-const ErrorView = lazy(() =>
-  import("./Views/ErrorView" /* webpackChunkName: "error-view" */)
 );
 
 const App = () => (
@@ -48,9 +45,7 @@ const App = () => (
           </Section>
         </Route>
 
-        <Route>
-          <ErrorView />
-        </Route>
+        <Redirect to="/" />
       </Switch>
     </Suspense>
   </Container>
